@@ -220,21 +220,15 @@ Let's try an example where we register a new user. Open Chrome Advanced Rest Cli
 
 ## New User Registration Example
 
-Request URL:				
-				http://127.0.0.1:8000/api/auth/signup
+Request URL:			http://127.0.0.1:8000/api/auth/signup <br>
 
-Header Name: 				
-				accept
-Header Value: 				
-				application/json
+Header Name: 			accept<br>
+Header Value: 			application/json<br>
 
-Header Name: 				
-				Content-Type
-Header Value: 				
-				application/json
+Header Name: 			Content-Type<br>
+Header Value: 			application/json<br>
 
-Method: 				
-				Post
+Method: 			Post<br>
 
 Body: 
 
@@ -245,9 +239,9 @@ Body:
 				  "password_confirmation": "12345678"
 				}
 
-Press "Send"
+Press "Send"<br>
 
-If the request is successful, the response will be:
+If the request is successful, the response will be:<br>
 
 				{
 				"message": "Successfully created user!"
@@ -255,23 +249,17 @@ If the request is successful, the response will be:
 
 ## User Login Example
 
-Using the login information for the user we just registered, use the following:
+Using the login information for the user we just registered, use the following:<br>
 
-Request URL:				
-				http://127.0.0.1:8000/api/auth/login
+Request URL:			http://127.0.0.1:8000/api/auth/login<br>
 
-Header Name: 				
-				accept
-Header Value: 				
-				application/json
+Header Name: 			accept<br>
+Header Value: 			application/json<br>
 
-Header Name: 				
-				Content-Type
-Header Value: 				
-				application/json
+Header Name: 			Content-Type<br>
+Header Value: 			application/json<br>
 
-Method: 				
-				Post
+Method: 			Post<br>
 
 Body: 
 
@@ -281,9 +269,9 @@ Body:
 				  "remember_me":true
 				}
 
-Press "Send"
+Press "Send"<br>
 
-If the request is successful, the response will be something like:
+If the request is successful, the response will be something like:<br>
 
 				{
 				"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMTY1OGVjYWNhMTA1M2ViNjFhYTQ1N2E4N2MzMzAxOGNhMjU2OWEyNGY3NTZhOTlmNzFmMDNmNGMzNmFhNTg3YWE2OTA2NzExNGM3OWQzIn0.eyJhdWQiOiIxIiwianRpIjoiNmExNjU4ZWNhY2ExMDUzZWI2MWFhNDU3YTg3YzMzMDE4Y2EyNTY5YTI0Zjc1NmE5OWY3MWYwM2Y0YzM2YWE1ODdhYTY5MDY3MTE0Yzc5ZDMiLCJpYXQiOjE1NDIwMTg0NjYsIm5iZiI6MTU0MjAxODQ2NiwiZXhwIjoxNTczNTU0NDY2LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.SVdO40jDSvkDueKTcNDcsAbUOmyPm93oUhWNWrym8Mtmh1hwgokXB2mN1mYr2uqg-oSV3nWjBTZdC00Z9Panu9pG2HOO_pAqL97BdrCxu5Whr_mdJeVpQxaygM_8u5q5eZNCZuLgRuZwjHev3Ai82LHE_Akx6D_N2GO6uqmlhcxh0VHJrMFNsSawOt_2sSSpeIklZKCnDYcCOeF5K1i1I5rB0f9MubJzW80-l-92JgaRVkIfy9IqmtB5wXCV8XF8_LpZY2HGXgYKoJgPNhqPm2BidpAR56GJg2mO0f2IrccjtYh6ObB1I0l7BW2hRVnqqL9GDEro63T3iDOrLy_0vfqLlayuXczh23ZIi31vSxeF-nfaB2lDi6NmRnhPdWEWY8EMdVA1Ti7rWOKPVrSJOl9z4-H3irJqzCVwgydpnOFU1g-O4riLi-W6LpgcxK9cWbjWFYbv_3DQ74tOrx7bUj-7Gx0XDlr4esoLzIVRJawLsWoVOOnsoyQPbOG0mgeLKn9V_52B1C3SArTAO5AZRcxPDrXR_Y5FG-EtKXQk1QJNuHf8QORb0hlJwjr-4qjTyc0QIDHRCX1D8Tbj8R0PDS0Q_rS8jnGA3cNlZ1a5nLJ3uez7RPLg--fOSHrZbROpC53yIUvH9nHQ_XYU3ADl6ri0pgoSK9T2yGXQ98GWLwc",
@@ -291,38 +279,39 @@ If the request is successful, the response will be something like:
 				"expires_at": "2018-11-19 10:27:46"
 				}
 
-This temporary access token should be stored in a secure manner for use during the session. 
+This temporary access token should be stored in a secure manner for use during the session. <br>
 
 ## User Logout Example
 
-Using the login information for the user we just registered, use the following:
+Using the login information for the user we just registered, use the following:<br>
 
 Request URL:				
-				http://127.0.0.1:8000/api/auth/logout
+				http://127.0.0.1:8000/api/auth/logout<br>
 
 Header Name: 				
-				accept
+				accept<br>
 Header Value: 				
-				application/json
+				application/json<br>
 
 Header Name: 				
-				Content-Type
+				Content-Type<br>
 Header Value: 				
-				application/json
+				application/json<br>
 
 Header Name: 				
-				Authorization
+				Authorization<br>
 Header Value: 				
-				Bearer 			eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMTY1OGVjYWNhMTA1M2ViNjFhYTQ1N2E4N2MzMzAxOGNhMjU2OWEyNGY3NTZhOTlmNzFmMDNmNGMzNmFhNTg3YWE2OTA2NzExNGM3OWQzIn0.eyJhdWQiOiIxIiwianRpIjoiNmExNjU4ZWNhY2ExMDUzZWI2MWFhNDU3YTg3YzMzMDE4Y2EyNTY5YTI0Zjc1NmE5OWY3MWYwM2Y0YzM2YWE1ODdhYTY5MDY3MTE0Yzc5ZDMiLCJpYXQiOjE1NDIwMTg0NjYsIm5iZiI6MTU0MjAxODQ2NiwiZXhwIjoxNTczNTU0NDY2LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.SVdO40jDSvkDueKTcNDcsAbUOmyPm93oUhWNWrym8Mtmh1hwgokXB2mN1mYr2uqg-oSV3nWjBTZdC00Z9Panu9pG2HOO_pAqL97BdrCxu5Whr_mdJeVpQxaygM_8u5q5eZNCZuLgRuZwjHev3Ai82LHE_Akx6D_N2GO6uqmlhcxh0VHJrMFNsSawOt_2sSSpeIklZKCnDYcCOeF5K1i1I5rB0f9MubJzW80-l-92JgaRVkIfy9IqmtB5wXCV8XF8_LpZY2HGXgYKoJgPNhqPm2BidpAR56GJg2mO0f2IrccjtYh6ObB1I0l7BW2hRVnqqL9GDEro63T3iDOrLy_0vfqLlayuXczh23ZIi31vSxeF-nfaB2lDi6NmRnhPdWEWY8EMdVA1Ti7rWOKPVrSJOl9z4-H3irJqzCVwgydpnOFU1g-O4riLi-W6LpgcxK9cWbjWFYbv_3DQ74tOrx7bUj-7Gx0XDlr4esoLzIVRJawLsWoVOOnsoyQPbOG0mgeLKn9V_52B1C3SArTAO5AZRcxPDrXR_Y5FG-EtKXQk1QJNuHf8QORb0hlJwjr-4qjTyc0QIDHRCX1D8Tbj8R0PDS0Q_rS8jnGA3cNlZ1a5nLJ3uez7RPLg--fOSHrZbROpC53yIUvH9nHQ_XYU3ADl6ri0pgoSK9T2yGXQ98GWLwc
+				Bearer 		
+								eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMTY1OGVjYWNhMTA1M2ViNjFhYTQ1N2E4N2MzMzAxOGNhMjU2OWEyNGY3NTZhOTlmNzFmMDNmNGMzNmFhNTg3YWE2OTA2NzExNGM3OWQzIn0.eyJhdWQiOiIxIiwianRpIjoiNmExNjU4ZWNhY2ExMDUzZWI2MWFhNDU3YTg3YzMzMDE4Y2EyNTY5YTI0Zjc1NmE5OWY3MWYwM2Y0YzM2YWE1ODdhYTY5MDY3MTE0Yzc5ZDMiLCJpYXQiOjE1NDIwMTg0NjYsIm5iZiI6MTU0MjAxODQ2NiwiZXhwIjoxNTczNTU0NDY2LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.SVdO40jDSvkDueKTcNDcsAbUOmyPm93oUhWNWrym8Mtmh1hwgokXB2mN1mYr2uqg-oSV3nWjBTZdC00Z9Panu9pG2HOO_pAqL97BdrCxu5Whr_mdJeVpQxaygM_8u5q5eZNCZuLgRuZwjHev3Ai82LHE_Akx6D_N2GO6uqmlhcxh0VHJrMFNsSawOt_2sSSpeIklZKCnDYcCOeF5K1i1I5rB0f9MubJzW80-l-92JgaRVkIfy9IqmtB5wXCV8XF8_LpZY2HGXgYKoJgPNhqPm2BidpAR56GJg2mO0f2IrccjtYh6ObB1I0l7BW2hRVnqqL9GDEro63T3iDOrLy_0vfqLlayuXczh23ZIi31vSxeF-nfaB2lDi6NmRnhPdWEWY8EMdVA1Ti7rWOKPVrSJOl9z4-H3irJqzCVwgydpnOFU1g-O4riLi-W6LpgcxK9cWbjWFYbv_3DQ74tOrx7bUj-7Gx0XDlr4esoLzIVRJawLsWoVOOnsoyQPbOG0mgeLKn9V_52B1C3SArTAO5AZRcxPDrXR_Y5FG-EtKXQk1QJNuHf8QORb0hlJwjr-4qjTyc0QIDHRCX1D8Tbj8R0PDS0Q_rS8jnGA3cNlZ1a5nLJ3uez7RPLg--fOSHrZbROpC53yIUvH9nHQ_XYU3ADl6ri0pgoSK9T2yGXQ98GWLwc<br>
 
 Method: 				
-				Get
+				Get<br>
 
-The long string in the Authorization header is identical to the access token recorded at login in the previous step.
+The long string in the Authorization header is identical to the access token recorded at login in the previous step.<br>
 
-Press "Send"
+Press "Send"<br>
 
-If the request is successful, the response will be:
+If the request is successful, the response will be:<br>
 
 				{
 				"message": "Successfully logged out"
@@ -331,9 +320,9 @@ If the request is successful, the response will be:
 
 --------------------------------------------------------------------------------------------------------
 
-There you have it - a super-quick and easy way to establish a basic Oauth server using Laravel and Passport. You can easily build upon this. 
+There you have it - a super-quick and easy way to establish a basic Oauth server using Laravel and Passport. You can easily build upon this. <br>
 
-Until next time, tata!
+Until next time, tata!<br>
 
 
 
