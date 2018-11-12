@@ -6,28 +6,31 @@
 STEPS:
 --------------------------------------------------------------------------------------------------------
 1. Command line
-'laravel new apitest 
+```laravel new apitest ```
 --------------------------------------------------------------------------------------------------------
 2. Command line 
-			cd apitest
-			composer require laravel/passport
+```cd apitest```
+```composer require laravel/passport```
 --------------------------------------------------------------------------------------------------------
 3. *Manually create a database in mysql
 *Add a user
 *Add database info to .env file
 --------------------------------------------------------------------------------------------------------
 4. Command line 
-			php artisan migrate
+```php artisan migrate```
 --------------------------------------------------------------------------------------------------------
-5. php artisan passport:install  -- record the keys that appear on screen
+5. Command line 
+```php artisan passport:install```
+Record the keys that appear on screen
 --------------------------------------------------------------------------------------------------------
 6. In App\User model:
 	
-			use Laravel\Passport\HasApiTokens;
+```php
+use Laravel\Passport\HasApiTokens;'''
 
-			and in class declaration: 
-
-			use Notifiable, HasApiTokens;
+and in class declaration: 
+```php
+			use Notifiable, HasApiTokens;'''
 --------------------------------------------------------------------------------------------------------
 7. In Provider/AuthServiceProvider:
 
