@@ -17,10 +17,12 @@ STEPS:
 *Add database info to .env file
 --------------------------------------------------------------------------------------------------------
 4. Command line 
-```php artisan migrate```
+```php artisan migrate
+```
 --------------------------------------------------------------------------------------------------------
 5. Command line 
-```php artisan passport:install```
+```php artisan passport:install
+```
 Record the keys that appear on screen
 --------------------------------------------------------------------------------------------------------
 6. In App\User model:
