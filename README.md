@@ -17,11 +17,11 @@ STEPS:
 --------------------------------------------------------------------------------------------------------
 6. In App\User model:
 	
-	use Laravel\Passport\HasApiTokens;
+			use Laravel\Passport\HasApiTokens;
 
-	and in class declaration: 
+			and in class declaration: 
 
-	use Notifiable, HasApiTokens;
+			use Notifiable, HasApiTokens;
 --------------------------------------------------------------------------------------------------------
 7. In Provider/AuthServiceProvider:
 
@@ -34,16 +34,16 @@ STEPS:
         Passport::routes();
     }
 --------------------------------------------------------------------------------------------------------
-8. config/auth.php
+8. config/auth.php:
 
 'guards' => [
     'web' => [
-        'driver' => 'session',
-        'provider' => 'users',
+	'driver' => 'session',
+	'provider' => 'users',
     ],
     'api' => [
-        'driver' => 'passport',
-        'provider' => 'users',
+	'driver' => 'passport',
+	'provider' => 'users',
     ],
 ],
 --------------------------------------------------------------------------------------------------------
@@ -69,6 +69,8 @@ Route::group([
 
 --------------------------------------------------------------------------------------------------------
 10.  php artisan make:controller AuthController
+
+
 
 Add the following code to the new controller:
 
@@ -182,7 +184,11 @@ class AuthController extends Controller
     }
 }
 
+
+
 --------------------------------------------------------------------------------------------------------
+
+
 
 Basic application is complete. 
 
