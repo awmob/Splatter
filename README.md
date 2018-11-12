@@ -1,17 +1,17 @@
 # laravel_oauth_basic
 ##  Laravel Api Oauth & Passport - Basic Structure
 
-*This creates a basic bare-bones structure to create an API Oauth system in Laravel. Modified from* https://medium.com/modulr/create-api-authentication-with-passport-of-laravel-5-6-1dc2d400a7f 
+*This creates a basic bare-bones structure to create an API Oauth system in Laravel. Modified from* https://medium.com/modulr/create-api-authentication-with-passport-of-laravel-5-6-1dc2d400a7f  <br>
 
-STEPS:
---------------------------------------------------------------------------------------------------------
-1. Command line
-```laravel new apitest ```
---------------------------------------------------------------------------------------------------------
-2. Command line 
-```cd apitest```
-```composer require laravel/passport```
---------------------------------------------------------------------------------------------------------
+STEPS: <br>
+-------------------------------------------------------------------------------------------------------- <br>
+1. Command line<br>
+<i>laravel new apitest</i>
+-------------------------------------------------------------------------------------------------------- <br>
+2. Command line <br>
+<i>cd apitest</i> <br>
+<i>composer require laravel/passport</i> <br>
+-------------------------------------------------------------------------------------------------------- <br>
 3. *Manually create a database in mysql
 *Add a user
 *Add database info to .env file
