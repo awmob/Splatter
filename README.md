@@ -7,13 +7,13 @@ STEPS:
 -------------------------------------------------------------------------------------------------------- 
 1. Command line
 
-laravel new apitest
+			laravel new apitest
 -------------------------------------------------------------------------------------------------------- 
 2. Command line
 
-cd apitest
+			cd apitest
 
-composer require laravel/passport
+			composer require laravel/passport
 -------------------------------------------------------------------------------------------------------- 
 3. Manually create a database in mysql
 
@@ -24,14 +24,14 @@ Add database info to .env file
 --------------------------------------------------------------------------------------------------------
 4. Command line 
 
-php artisan migrate
+			php artisan migrate
 
 --------------------------------------------------------------------------------------------------------
 5. Command line 
 
-php artisan passport:install
+			php artisan passport:install
 
-Record the keys that appear on screen
+			Record the keys that appear on screen
 
 --------------------------------------------------------------------------------------------------------
 6. In App\User model:
@@ -86,7 +86,9 @@ and in class declaration:
 			});
 
 --------------------------------------------------------------------------------------------------------
-10.  php artisan make:controller AuthController
+10.  Add a new controller in command line:
+
+			php artisan make:controller AuthController
 
 
 
@@ -206,9 +208,60 @@ Add the following code to the new controller:
 
 --------------------------------------------------------------------------------------------------------
 
-
-
 Basic application is complete. 
+
+Run Laravel dev server with:
+
+			php artisan serve
+
+We can now test with Postman or Chrome Advanced Rest Client.
+
+Let's try an example where we register a new user. Open Chrome Advanced Rest Client:
+
+##New User Registration Example
+
+http://127.0.0.1:8000/api/auth/signup
+
+Header Name: accept
+Header Value: application/json
+
+Header Name: Content-Type
+Header Value: application/json
+
+Method: Post
+
+Body: 
+
+{
+  "email": "tester@tester.com",
+  "name": "tester",
+  "password": "12345678",
+  "password_confirmation": "12345678"
+}
+
+Press "Send"
+
+If the request is successful, the response will be:
+
+{
+"message": "Successfully created user!"
+}
+
+##User Login Example
+
+Using the login information for the user we just registered, do the following:
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
