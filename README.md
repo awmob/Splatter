@@ -25,14 +25,12 @@ STEPS:
 --------------------------------------------------------------------------------------------------------
 7. In Provider/AuthServiceProvider:
 
-	use Laravel\Passport\Passport;
+			use Laravel\Passport\Passport;
 
-	public function boot()
-    {
-        $this->registerPolicies();
-
-        Passport::routes();
-    }
+			public function boot(){
+				$this->registerPolicies();
+				Passport::routes();
+		    	}
 --------------------------------------------------------------------------------------------------------
 8. config/auth.php:
 
