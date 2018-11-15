@@ -1,98 +1,62 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('templates.main_layout')
 
-        <title>Laravel</title>
+@section('title','Splatter - Like Twitter, But Splatter!')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+@section('main')
 
-            .full-height {
-                height: 100vh;
-            }
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h1 class="daheadfont">Splatter.</h1>
+    </div>
+  </div>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
 
-            .position-ref {
-                position: relative;
-            }
+  <div class="row">
+    <div class="col-sm-12 p-2 text-center splatter_backer">
+      <h2 class="daheadfont">Like Twitter, but Splatter!</h2>
+    </div>
+  </div>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
 
-            .content {
-                text-align: center;
-            }
+   <div class="row">
+     <div class="col-sm-12 p-5 text-center ">
+       <p>Howdy there, pardner. Welcome to Splatter.</p>
+        <p>Like Twitter? Sure it is. Like Twitter? Sure you do! Now get Splattering!</p>
+        <p>Currently, Splatter is a test site designed to demonstrate Laravel Oauth API functionality.</p>
+     </div>
+   </div>
 
-            .title {
-                font-size: 84px;
-            }
+   <form method = "POST" action = "{{url('customer-login')}}">
+   <div class="row">
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+           {{csrf_field()}}
+         <div class="col-sm-1 text-center m-1">
+         </div>
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+         <div class="col-sm-2 text-center m-1">
+           <input type="submit" class="button" value="Log In">
+         </div>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+         <div class="col-sm-4 text-center m-1">
+           <input type="text" name="email" class="form_text">
+         </div>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+         <div class="col-sm-4 text-center m-1">
+           <input type="password" name="password" class="form_text">
+          <div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+          <div class="col-sm-1 text-center m-1">
+          </div>
+
+
+
+   </div>
+   </form>
+
+
+
+</div>
+
+@endsection
