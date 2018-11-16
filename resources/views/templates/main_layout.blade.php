@@ -21,8 +21,27 @@
 
 <main>
 
+				@php
+					if ($user){
+						echo '<div id="logout" class="splat_text daheadfont">';
+
+						if ($guard_type == 'web'){
+							$route = route('customer.logout');
+						}
+						else if ($guard_type == 'admin'){
+							$route = route('admin.logout');
+						}
+
+						echo '<a href="'.$route.'">Logout</a>';
+
+						echo '</div>';
+					}
+				@endphp
+
+
+
 				 @if($flash = session('message'))
-				 <div id='flash-message' role="alert">
+				 <div id='flash-message' class = "errors_pass text-center" role="alert">
 				 	{{$flash}}
 			 	 </div>
 				 @endif

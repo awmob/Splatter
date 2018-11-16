@@ -67,3 +67,35 @@ h2{
 .unstyled{
 	list-style: none;
 }
+
+.splat_text{
+	font-size: 1.5em;
+	color:white;
+
+}
+
+#logout{
+	position: fixed;
+	top: 10px;
+	right: 20px;
+}
+
+#logout:hover{
+	text-decoration: underline;
+}
+
+a{
+	color:white;
+	text-decoration: none;
+}
+a:hover{
+	color:#97caef;
+	text-decoration: underline;
+}
+a:active{
+	color:#97caef;
+	text-decoration: underline;
+}
+a:visited{
+	color:#97caef;
+}

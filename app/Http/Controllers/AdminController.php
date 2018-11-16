@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller{
     /**
@@ -19,7 +20,17 @@ class AdminController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){    {
-        return view('admin');
+    public function index()
+		{
+
+				if(Auth::guard('admin')->check())
+				{
+					 $user = Auth::user();
+					 $guard_type = 'admin';
+				}
+				else{
+					$user = false;
+				}
+        return view('authadmin.admin-home',compact('user','guard_type'));
     }
 }

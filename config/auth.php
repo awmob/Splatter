@@ -17,11 +17,13 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
+
+    /*
     'admins' => [
         'driver' => 'eloquent',
         'model' => App\Admin::class,
     ],
-
+*/
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -89,6 +91,7 @@ return [
             'model' => App\User::class,
         ],
 
+ //standard database driver using non-eloquent query-builder
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

@@ -1,23 +1,31 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('templates.main_layout')
 
-        <title>Admin Home</title>
+@section('title','Splatter - Like Twitter, But Splatter!')
 
-		</head>
 
-</html>
+@section('main')
 
-<body>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h1 class="daheadfont">Splatter.</h1>
+    </div>
+  </div>
 
-<div class="card-header">{{ __('Admin Login') }}</div>
+	<div class="row">
+    <div class="col-sm-12 p-2 text-center splatter_backer">
+      <h2 class="daheadfont">Admin Home</h2>
+    </div>
+  </div>
 
-<div class="card-body">
- DASHBOARD ADMIN
+
+  <div class="row">
+    <div class="col-sm-12 p-2 text-center">
+      Great to see you again, {{$user->name}}
+    </div>
+  </div>
+
+
 </div>
 
-</body>
-
-</html>
+@endsection

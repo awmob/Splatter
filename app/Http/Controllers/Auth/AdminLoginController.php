@@ -16,8 +16,8 @@ class AdminLoginController extends Controller
      */
     public function showLoginForm()
     {
-
-        return view('authadmin.admin-login');
+				$user = false;
+        return view('authadmin.admin-login', compact('user'));
     }
 
     protected function guard(){
@@ -31,7 +31,7 @@ class AdminLoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/dashboard';
+    //protected $redirectTo = route('admin.home');
 
     /**
      * Create a new controller instance.
@@ -42,10 +42,27 @@ class AdminLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('logout');
+
+        //$this->middleware('guest:admin')->except('logout');
     }
 
-		public function login(){
-			dd(request('test'));
+
+		public function login(Request $request){
+			$this->validate($request, [
+				'email' => 'required|email',
+				'password' => 'required'
+			]);
+
+			$remember = true;
+
+			if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $remember)){
+				return redirect()->intended(route('admin.home'));
+			}
+
+			session()->flash('message', 'Those credentials do not match the users in our database...');
+			return redirect()->back()->withInput($request->only('email','remember'));
+
 		}
+
+
 }

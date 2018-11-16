@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -25,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -40,6 +42,27 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('auth.login');
+    }
+
+
+    public function login(Request $request){
+      $this->validate($request, [
+        'email' => 'required|email',
+        'password' => 'required'
+      ]);
+
+      $remember = true;
+
+      if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password], $remember)){
+
+
+
+        return redirect()->intended(route('home'));
+      }
+
+      session()->flash('message', 'Those credentials do not match the users in our database...');
+      return redirect()->back()->withInput($request->only('email','remember'));
+
     }
 
 
