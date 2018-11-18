@@ -2,6 +2,7 @@
 
 body{
 	background-color: #fc4445;
+	min-height: 1000px;
 }
 
 .daheadfont, .errors_pass{

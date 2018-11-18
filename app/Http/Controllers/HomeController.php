@@ -36,8 +36,6 @@ class HomeController extends Controller
 				$splats_get = false;
 			}
 
-
-
 			return view('welcome',compact('user','guard_type','splats_get'));
 		}
 }

@@ -26,6 +26,7 @@
     <div class="col-sm-12 p-5 text-center splat_text daheadfont">
 
        <p>Hello, {{$user->name}}! Start Splatting!</p>
+       <p class="small">&#64;{{$user->username}}</p>
     </div>
 
   </div>
@@ -64,6 +65,8 @@
   <div class="row">
     <div class="col-sm-12 p-5 text-center splat_text daheadfont">
       <h3>Your Latest Splats</h3>
+      <hr>
+      <div id="your_splats"></div>
     </div>
   </div>
   @endif

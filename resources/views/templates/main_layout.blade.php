@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
         <link rel="shortcut icon" href="{{{ asset('img/favicon.png') }}}">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
         <link href="{{asset('css/main.css')}}" rel="stylesheet" type="text/css">
 
 
@@ -52,7 +52,9 @@
 
 </main>
 
-
-
+@if($user)
+	<script src="{{asset('js/user_splats.js')}}">
+@endif
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>

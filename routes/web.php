@@ -19,6 +19,10 @@ NOTE
 Changed:
 Illuminate\Foundation\Exceptions\Handler::unauthenticated($request, Illuminate\Auth\AuthenticationException
 
+Changed:
+
+this sets default auth routes
+laravel/framework/src/Illuminate/Routing/Router.php
 */
 
 Route::get('/', 'HomeController@home_show')->name('home');
@@ -27,9 +31,9 @@ Route::post('/customer-login', 'Auth\LoginController@login')->name('customer.log
 
 Route::get('/customer-logout', 'Auth\LoginController@logout')->name('customer.logout');
 
-Route::post('/submit-splat', 'SplatsController@submit_splat')->name('customer.submit.splat')->middleware('auth');
+Route::post('/submit-splat', 'CustomerSplatsController@submit_splat')->name('customer.submit.splat')->middleware('auth');
 
-
+Route::get('/customer-splats', 'CustomerSplatsController@get_your_splats')->name('customer.get_splats')->middleware('auth');
 
 
 
