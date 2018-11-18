@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Splats;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\AuthHelpers;
+use App\Helpers\SplatHelpers;
 use App\User;
-
+use App\Hashtags;
+use  App\HashtagSplats;
 
 /*
 		Controller to manage customer-specific splats
@@ -17,6 +19,7 @@ class CustomerSplatsController extends Controller
 {
 
 	use AuthHelpers;
+	use SplatHelpers;
 	private $guard_type;
 
 	public function __construct()
@@ -30,25 +33,32 @@ class CustomerSplatsController extends Controller
 		Check that user exists and logged in
 		Submit a 140 character splat to the database
 	*/
-	public function submit_splat(Request $request, Splats $splats){
+	public function submit_splat(Request $request, Splats $splats, Hashtags $hashtags, HashtagSplats $hashtag_splats){
 
 		$this->validate($request, [
 			'splat' => 'required|min:10|max:' . config('constants.splat_limit') ,
 		]);
 
+		//check that the user is logged in
 		$user = $this->check_and_get_user('web');
 		$guard_type = $this->guard_type;
 
+		//check and save the splat to db with correct user id
 		$splats->splat = $request->splat;
 		$splats->user_id = $user->id;
 		$splats->save();
 
+		//now process the hashtags
+		$hashtags_get_array = $this->find_hashtags($request->splat);
+		$hashtags->process_hash_tags($hashtags_get_array, $splats->id, $user->id, $hashtag_splats);
 
 		session()->flash('message', $user->name . '. Your splat has been posted!');
 
 		return redirect()->route('home');
 
 	}
+
+
 
 	/*
 		First find max
@@ -70,5 +80,7 @@ class CustomerSplatsController extends Controller
 
 		return $splats_get;
 	}
+
+
 
 }
