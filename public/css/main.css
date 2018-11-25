@@ -3,6 +3,7 @@
 body{
 	background-color: #fc4445;
 	min-height: 1000px;
+
 }
 
 .daheadfont, .errors_pass{
@@ -27,6 +28,9 @@ h2{
 	}
 }
 
+h3{
+	font-weight: bold;
+}
 
 
 .splatter_backer{
@@ -76,9 +80,14 @@ h2{
 }
 
 #logout{
+	z-index: 99;
 	position: fixed;
-	top: 10px;
-	right: 20px;
+	bottom: 15px;
+	right: 15px;
+	padding: 2px 8px 5px 8px;
+
+	background-color: #55bcc9;
+	font-size: 1.2em;
 }
 
 #logout:hover{
@@ -86,7 +95,7 @@ h2{
 }
 
 a{
-	color:white;
+	color:#3feee6;
 	text-decoration: none;
 }
 a:hover{
@@ -99,4 +108,51 @@ a:active{
 }
 a:visited{
 	color:#97caef;
+}
+
+a.head_link{
+	color:black;
+}
+a.head_link:hover{
+	color:black;
+	text-decoration: underline;
+}
+a.head_link:active{
+	color:black;
+	text-decoration: underline;
+}
+a.head_link:visited{
+	color:black;
+}
+
+.profile-pic-main{
+	width: 250px;
+	height: 250px;
+}
+
+.profile-pic-small{
+	width: 50px;
+	height: 50px;
+}
+
+a.logout{
+	color: #fc4445;
+}
+
+.splat_text{
+	overflow-wrap: break-word;
+}
+
+.follow{
+	padding:4px;
+	display: inline-block;
+	color:#fc4445;
+	background-color: #55bcc9;
+	border:none;
+}
+
+.follow:hover{
+	color:#fc4445;
+	text-decoration: underline;
+	cursor: pointer;
 }

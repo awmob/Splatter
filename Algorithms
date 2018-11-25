@@ -1,10 +1,52 @@
 
 
-Users can splatter
+Goals
+-----------------
+1. Add User to splats - link to user profile page *
+2. Allow users to follow
+3. Profile pictures *
+4. Parsing of shoutouts @username *
+5. Allow users to like posts
+6. User profile pages *
 
-splats table
+
+Following
 
 id
-userid
-splat
-timetamps
+user_id
+following_id
+timestamps
+
+
+
+show follow form
+csrf token
+
+
+//add an event listener to the button
+
+//////////////////////////////////////////
+
+var headers = {
+   "Content-Type": "application/json",
+   "Access-Control-Origin": "*"
+}
+
+try adding the above lines to headers.
+
+var data = {
+    "email": "peter@klaven",
+    "password": "cityslicka"
+}
+
+fetch("https://reqres.in/api/login", {
+    method: "POST",
+    headers: headers,
+    body:  JSON.stringify(data)
+})
+.then(function(response){
+    return response.json();
+})
+.then(function(data){
+    console.log(data)
+});

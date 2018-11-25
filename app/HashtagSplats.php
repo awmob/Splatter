@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class HashtagSplats extends Model
 {
 
@@ -16,5 +17,6 @@ class HashtagSplats extends Model
 		$this->user_id = $user_id;
 		$this->save();
 	}
+
 
 }

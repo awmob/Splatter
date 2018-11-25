@@ -24,13 +24,14 @@ class HomeController extends Controller
 		//if logged in show splat send page and show logged in as info
     public function home_show(Splats $splats)
 		{
-
 			//check if user is logged in and get user info if logged in, false if not
 			//if(Auth::check() ){
 			$user = $this->check_and_get_user('web');
 			$guard_type = $this->guard_type;
+
 			if($user){
-				$splats_get = $splats->get_splats($user->id);
+				$splats_get = $splats->check_splats_exist($user->id);
+
 			}
 			else{
 				$splats_get = false;

@@ -1,16 +1,14 @@
 @extends('templates.main_layout')
 
+@if ($user)
+@section('title','Splatter! @' . $user->username)
+@else
 @section('title','Splatter - Like Twitter, But Splatter!')
-
+@endif
 
 @section('main')
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12 text-center">
-      <h1 class="daheadfont">Splatter.</h1>
-    </div>
-  </div>
+
 
 
   <div class="row">
@@ -27,6 +25,10 @@
 
        <p>Hello, {{$user->name}}! Start Splatting!</p>
        <p class="small">&#64;{{$user->username}}</p>
+
+
+
+       <p><img class="rounded-circle profile-pic-main" src="{{asset('storage/profile_pics/' . $user->profile_image)}}" alt="{{$user->username}}"></p>
     </div>
 
   </div>
@@ -66,7 +68,7 @@
     <div class="col-sm-12 p-5 text-center splat_text daheadfont">
       <h3>Your Latest Splats</h3>
       <hr>
-      <div id="your_splats"></div>
+      <div id="show_splats"></div>
     </div>
   </div>
   @endif
@@ -117,7 +119,10 @@
    </form>
    @endif
 
-
 </div>
 
+@if($user)
+  <script>let the_url="{{url('customer-splats')}}";let usertype="user";let base_url="{{url('')}}"</script>
+	<script src="{{asset('js/user_splats.js')}}"></script>
+@endif
 @endsection

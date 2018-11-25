@@ -13,13 +13,20 @@
 
         <link href="{{asset('css/main.css')}}" rel="stylesheet" type="text/css">
 
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
     </head>
     <body class="pt-5">
 
 
 <main>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h1 class="daheadfont"><a class="head_link" href="{{url('/')}}">Splatter.</a></h1>
+      </div>
+    </div>
 
 				@php
 					if ($user){
@@ -32,7 +39,7 @@
 							$route = route('admin.logout');
 						}
 
-						echo '<a href="'.$route.'">Logout</a>';
+						echo '<a class="logout" href="'.$route.'">Logout</a>';
 
 						echo '</div>';
 					}
@@ -52,9 +59,7 @@
 
 </main>
 
-@if($user)
-	<script src="{{asset('js/user_splats.js')}}">
-@endif
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>

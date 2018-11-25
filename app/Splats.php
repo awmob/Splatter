@@ -10,7 +10,15 @@ class Splats extends Model
 
 		public function get_splats($user_id)
 		{
-			$splats = $this->where('user_id','=','$user_id');
+			$splats = $this->where('user_id',$user_id);
 			return $splats;
 		}
+
+		public function check_splats_exist($user_id)
+		{
+			$splats = $this->where('user_id',$user_id)->exists();
+			return $splats;
+		}
+
+
 }
