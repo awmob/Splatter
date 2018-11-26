@@ -143,7 +143,7 @@ a.logout{
 	overflow-wrap: break-word;
 }
 
-.follow{
+.follow, .unfollow{
 	padding:4px;
 	display: inline-block;
 	color:#fc4445;
@@ -151,7 +151,7 @@ a.logout{
 	border:none;
 }
 
-.follow:hover{
+.follow:hover, .unfollow:hover{
 	color:#fc4445;
 	text-decoration: underline;
 	cursor: pointer;

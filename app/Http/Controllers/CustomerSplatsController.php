@@ -156,7 +156,7 @@ class CustomerSplatsController extends Controller
 		$splats_get = $this->get_splats($user->id, $splats);
 
 		//turn shoutouts and hashtags into urls
-		$splats_get = $this->process_splat_inline_urls($splats_get);
+		$splats_get = $this->process_splat_inline_urls($splats_get, false);
 
 		return $splats_get;
 	}

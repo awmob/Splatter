@@ -39,7 +39,7 @@ Route::get('user-info-get/{user_id}','UserController@get_single_user')->name('us
 
 //follow a user
 Route::post('follow_user_ajax','FollowingController@follow_user')->middleware('auth');
-
+Route::delete('unfollow_user_ajax','FollowingController@unfollow_user')->middleware('auth');
 
 //Login and auth related
 Route::post('/customer-login', 'Auth\LoginController@login')->name('customer.login');

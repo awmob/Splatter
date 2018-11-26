@@ -106,9 +106,14 @@ class LatestSplats{
 
 				let follow_div = document.createElement('div');
 
-				follow_div.className = "small follow";
-				follow_div.id = "bb" + big_splat.main_user_id;
-				follow_div.innerText = "FOLLOW";
+				if(big_splat.following){
+					follow_div.className = "small unfollow";
+					follow_div.innerText = "UNFOLLOW";
+				}
+				else{
+					follow_div.className = "small follow";
+					follow_div.innerText = "FOLLOW";
+				}
 
 				follow_div.dataset.followUser = big_splat.userid;
 				follow_div.dataset.mainUser = big_splat.main_user_id;
@@ -145,28 +150,41 @@ let latest_splats = new LatestSplats(base_url);
 
 //set event listener for delegation application of event listener to dynamic objects
 document.addEventListener('click', function (event) {
+
+	//if the follow user element is clicked
 	if (event.target.matches('.follow')) {
-		//alert(event.target.dataset.followUser);
-		//alert(event.target.dataset.mainUser);
-		process_follow(base_url, event.target.dataset.followUser, event.target.dataset.mainUser);
-		event.target.innerHTML = "UNFOLLOW";
+		//call the backend follow function and set elements from same user to unfollow
+		process_follow(base_url + '/follow_user_ajax', event.target.dataset.followUser, "UNFOLLOW", "small unfollow", "POST");
+	}
+
+	//if the follow user element is clicked
+	if (event.target.matches('.unfollow')) {
+		//call the backend unfollow function
+		process_follow(base_url + '/unfollow_user_ajax', event.target.dataset.followUser, "FOLLOW", "small follow", "DELETE");
 	}
 });
 
-
 //processes when user clicks follow buttons - sends follow data to dbase
 //and retrieves success failure message, changes button appearance
-function process_follow(url, follow_user, main_user){
-	url = url + '/follow_user_ajax';
+function process_follow(url, follow_user, inner_html, classnames, data_method){
 
 	let data = {
-		"follow_user": follow_user,
-		"main_user": main_user
+		"follow_user": follow_user
 	}
 
-	setData(url, data)
+	setData(url, data, data_method)
 		.then((re_returned_data) => {
-			alert(re_returned_data.data);
+
+			if(re_returned_data.success){
+
+				let followed = document.querySelectorAll("[data-follow-user='"+follow_user+"']");
+
+				followed.forEach( (foll) => {
+					foll.innerHTML = inner_html;
+					foll.className = classnames;
+				});
+			}
+
 		});
 
 }
@@ -174,7 +192,7 @@ function process_follow(url, follow_user, main_user){
 
 
 //submit data as post and get success failure message
-async function setData(url, data){
+async function setData(url, data, data_method){
 	let headers = {
 	   "Content-Type": "application/json",
 	   "Access-Control-Origin": "*",
@@ -183,7 +201,7 @@ async function setData(url, data){
 
 
 	let response = await fetch(url, {
-									    method: "POST",
+									    method: data_method,
 									    headers: headers,
 									    body:  JSON.stringify(data)
 									});
@@ -207,6 +225,7 @@ window.addEventListener('scroll',() =>{ cond_grab(usertype) });
 
 //get the data from the database and pass to calling function
 async function getData(url, splats_get_me_cl){
+	
 		//set_is_loading tracks status of loading
 		splats_get_me_cl.set_is_loading(true);
 		 //await the response of the fetch call

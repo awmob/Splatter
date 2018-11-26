@@ -11,6 +11,7 @@ use App\Helpers\HtmlHelpers;
 use App\Splats;
 use App\Hashtags;
 use App\HashtagSplats;
+use App\Following;
 
 class HashtagsController extends Controller
 {
@@ -37,7 +38,7 @@ class HashtagsController extends Controller
 
 
 		//get the splats for a specific hashtag and return the json collection
-		public function get_hashtag_splats($hashtag_text, Hashtags $hashtags, HashtagSplats $hashtag_splats){
+		public function get_hashtag_splats($hashtag_text, Hashtags $hashtags, HashtagSplats $hashtag_splats, Following $following){
 			$user = $this->check_and_get_user('web');
 			$user_id = $user ? $user->id : false;
 
@@ -49,7 +50,7 @@ class HashtagsController extends Controller
 				$hashtag_splats_get = $this->get_raw_splats($hash_get[0]->id, $hashtag_splats);
 
 				//turn hashtags and shoutouts and other elements into urls
-				$hashtag_splats_get = $this->process_splat_inline_urls($hashtag_splats_get, $user_id);
+				$hashtag_splats_get = $this->process_splat_inline_urls($hashtag_splats_get, $user_id, $following);
 
 				//insert the username preceding the splat
 				return($hashtag_splats_get);

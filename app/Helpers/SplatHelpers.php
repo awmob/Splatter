@@ -8,7 +8,7 @@
 
 
 		//combined umbrella function to find and set html elements in splats
-		private function process_splat_inline_urls($splats_get, $main_user_id = false){
+		private function process_splat_inline_urls($splats_get, $main_user_id, $following_model = false){
 			for($i = 0; $i < sizeof($splats_get); $i++){
 				//inline elements
 				$splats_get[$i]->splat = $this->process_single_splat_shoutouts($splats_get[$i]->splat);
@@ -20,15 +20,18 @@
 
 				//set follow forms / links
 				if($main_user_id){
+
+					$splats_get[$i]->allow_follow = $main_user_id == $splats_get[$i]->userid ? false : true;
+					//if true //check whether following or not
+					if($following_model){
+						$following_get = $following_model->get_following($main_user_id, $splats_get[$i]->userid);
+						$splats_get[$i]->following = $following_get ? true : false;
+					}
+
+
+
 					$splats_get[$i]->main_user_id = $main_user_id;
 
-					//if the current user and the main user are the same then no follow link allowed
-					if($main_user_id == $splats_get[$i]->userid){
-						$splats_get[$i]->allow_follow = false;
-					}
-					else{
-						$splats_get[$i]->allow_follow = true;
-					}
 				}
 				//if not logged in then not allowed to follow nor set main id
 				else{
