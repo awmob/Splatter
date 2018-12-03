@@ -144,11 +144,24 @@ a.logout{
 }
 
 .follow, .unfollow{
+	margin-top: 10px;
 	padding:4px;
 	display: inline-block;
 	color:#fc4445;
 	background-color: #55bcc9;
 	border:none;
+}
+
+.liker, .unliker{
+	margin-left: 10px;
+	color: #55bcc9;
+
+}
+
+.liker:hover,.unliker:hover{
+	color:#97caef;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .follow:hover, .unfollow:hover{

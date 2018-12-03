@@ -41,6 +41,11 @@ Route::get('user-info-get/{user_id}','UserController@get_single_user')->name('us
 Route::post('follow_user_ajax','FollowingController@follow_user')->middleware('auth');
 Route::delete('unfollow_user_ajax','FollowingController@unfollow_user')->middleware('auth');
 
+//like posts
+Route::post('like-splat','SplatLikesController@like_splat')->middleware('auth');
+Route::delete('unlike-splat','SplatLikesController@like_splat')->middleware('auth');
+Route::get('get-like-count/{splat_id}','SplatLikesController@get_like_count_ajax')->middleware('auth');
+
 //Login and auth related
 Route::post('/customer-login', 'Auth\LoginController@login')->name('customer.login');
 Route::get('/customer-logout', 'Auth\LoginController@logout')->name('customer.logout');

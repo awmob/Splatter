@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Splats;
 use App\Following;
+use App\SplatLikes;
 
 use App\Helpers\AuthHelpers;
 use App\Helpers\SplatHelpers;
@@ -58,7 +59,7 @@ class UserController extends Controller
 
 		}
 
-		public function get_single_user(Request $request, User $user_model, Following $following){
+		public function get_single_user(Request $request, User $user_model, Following $following, SplatLikes $splat_likes){
 			$user = $this->check_and_get_user('web');
 			$user_id = $user ? $user->id : false;
 
@@ -66,7 +67,7 @@ class UserController extends Controller
 			$user_splats_get = $user_model->single_user_get_api($request->user_id);
 
 			//turn shoutouts and hashtags into urls
-			$user_splats_get = $this->process_splat_inline_urls($user_splats_get, $user_id, $following);
+			$user_splats_get = $this->process_splat_inline_urls($user_splats_get, $user_id, $following, $splat_likes);
 
 
 			return $user_splats_get;

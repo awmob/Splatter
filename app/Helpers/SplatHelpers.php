@@ -4,11 +4,8 @@
 
 	trait SplatHelpers{
 
-
-
-
 		//combined umbrella function to find and set html elements in splats
-		private function process_splat_inline_urls($splats_get, $main_user_id, $following_model = false){
+		private function process_splat_inline_urls($splats_get, $main_user_id, $following_model = false, $splat_like_model = false){
 			for($i = 0; $i < sizeof($splats_get); $i++){
 				//inline elements
 				$splats_get[$i]->splat = $this->process_single_splat_shoutouts($splats_get[$i]->splat);
@@ -28,7 +25,12 @@
 						$splats_get[$i]->following = $following_get ? true : false;
 					}
 
-
+					//check if user has liked or not
+					if($splat_like_model){
+						$likes_check = $splat_like_model->check_like_exists($main_user_id, $splats_get[$i]->splat_id);
+						$splats_get[$i]->liked = $likes_check ? true : false;
+						$splats_get[$i]->likes_count = $splat_like_model->get_like_count($splats_get[$i]->splat_id);
+					}
 
 					$splats_get[$i]->main_user_id = $main_user_id;
 

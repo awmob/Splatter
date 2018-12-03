@@ -10,17 +10,12 @@ Goals
 6. User profile pages *
 
 
-Following
+splat_likes
 
 id
-user_id
-following_id
-timestamps
-
-
-
-show follow form
-csrf token
+splat_id
+liker_id
+date
 
 
 //add an event listener to the button

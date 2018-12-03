@@ -100,10 +100,27 @@ class LatestSplats{
 			enclosed_div_row_one.appendChild(sub_div_one);
 			enclosed_div_row_two.appendChild(sub_div_two);
 
-			//follow - only show follow link if follow is valid
+			//follow and like  - only show follow link if follow and like are valid
 			if(big_splat.allow_follow){
-				let follow_div_wrapper = document.createElement('div');
 
+
+				//create the like spans
+				let like_span = document.createElement('span');
+
+				if(big_splat.liked){
+					like_span.className = "unliker";
+					like_span.innerHTML = this.set_unlike_image_html();
+					like_span.dataset.splatId = big_splat.splat_id;
+				}
+
+				else{
+					like_span.className = "liker";
+					like_span.innerHTML = this.set_like_image_html();
+					like_span.dataset.splatId = big_splat.splat_id;
+				}
+
+				//create the follow / unfollow links
+				let follow_div_wrapper = document.createElement('div');
 				let follow_div = document.createElement('div');
 
 				if(big_splat.following){
@@ -120,6 +137,16 @@ class LatestSplats{
 
 				sub_div_one.appendChild(follow_div_wrapper);
 				follow_div_wrapper.appendChild(follow_div);
+				follow_div_wrapper.appendChild(like_span);
+
+				let like_counter = document.createElement('span');
+				like_counter.dataset.likeCounterSplatId = big_splat.splat_id;
+				follow_div_wrapper.appendChild(like_counter);
+
+				//create the like counts
+				if(big_splat.likes_count){
+					like_counter.innerHTML = " (" + big_splat.likes_count + ") ";
+				}
 
 			}
 
@@ -131,6 +158,16 @@ class LatestSplats{
 		});
 	}
 
+	set_like_image_html(){
+		let likeme = 'LIKE SPLAT';
+		return likeme;
+	}
+
+	set_unlike_image_html(){
+		let likeme = 'UNLIKE SPLAT';
+		return likeme;
+	}
+
 	set_image_html(username, src_file){
 		let image_html = '<img class="rounded-circle profile-pic-small" src="' + this.base_url  + '/storage/profile_pics/' + src_file + '" alt="'+ username +'">';
 		return image_html;
@@ -139,7 +176,6 @@ class LatestSplats{
 	add_follow_link(username){
 		let follow_html = '<a href=""></a>';
 	}
-
 }
 
 
@@ -149,7 +185,7 @@ let latest_splats = new LatestSplats(base_url);
 
 
 //set event listener for delegation application of event listener to dynamic objects
-document.addEventListener('click', function (event) {
+document.addEventListener('click', (event) => {
 
 	//if the follow user element is clicked
 	if (event.target.matches('.follow')) {
@@ -162,7 +198,63 @@ document.addEventListener('click', function (event) {
 		//call the backend unfollow function
 		process_follow(base_url + '/unfollow_user_ajax', event.target.dataset.followUser, "FOLLOW", "small follow", "DELETE");
 	}
+
+	if (event.target.matches('.liker')) {
+		//call the backend like unlike function
+		process_like(base_url + '/like-splat', event.target.dataset.splatId, "UNLIKE SPLAT", "unliker", "POST", true);
+		set_counts(event.target.dataset.splatId, base_url);
+	}
+
+	if (event.target.matches('.unliker')) {
+		//call the backend like unlike function
+		process_like(base_url + '/unlike-splat', event.target.dataset.splatId, "LIKE SPLAT", "liker", "DELETE", false);
+		set_counts(event.target.dataset.splatId, base_url);
+			//splatId
+	}
 });
+
+
+//set the like counts when the like status has changed
+function set_counts(splat_id, url){
+	url_send = url  + '/get-like-count/' + splat_id;
+	let like_count_set = document.querySelector("[data-like-counter-splat-id='"+splat_id+"']");
+
+	//get the like counts
+	getBasicData(url_send)
+		//like or unlike - async wait for success response before proceeding
+		.then((re_returned_data) => {
+			//set the counts
+			if(re_returned_data.success){
+				like_count_set.innerHTML = " (" + re_returned_data.success + ") ";
+			}
+			else{
+				like_count_set.innerHTML = "";
+			}
+		});
+}
+
+
+//Processes the likes and unlikes on a page. Sends like / unlike data to dbase
+
+function process_like(url, splat_id, inner_html, classnames, data_method, to_like){
+	let data = {
+		"splat_id" : splat_id,
+		"to_like" : to_like
+	}
+	setData(url, data, data_method)
+
+		//like or unlike - async wait for success response before proceeding
+		.then((re_returned_data) => {
+
+			if(re_returned_data.success){
+				//Get the button and change appearance and state
+				let like_set = document.querySelector("[data-splat-id='"+splat_id+"']");
+				like_set.innerHTML = inner_html;
+				like_set.className = classnames;
+			}
+		});
+
+}
 
 //processes when user clicks follow buttons - sends follow data to dbase
 //and retrieves success failure message, changes button appearance
@@ -173,12 +265,13 @@ function process_follow(url, follow_user, inner_html, classnames, data_method){
 	}
 
 	setData(url, data, data_method)
+	//follow or unfollow - async wait for success response before proceeding
 		.then((re_returned_data) => {
 
 			if(re_returned_data.success){
 
 				let followed = document.querySelectorAll("[data-follow-user='"+follow_user+"']");
-
+				//loop through and change all elements from followed user
 				followed.forEach( (foll) => {
 					foll.innerHTML = inner_html;
 					foll.className = classnames;
@@ -190,29 +283,26 @@ function process_follow(url, follow_user, inner_html, classnames, data_method){
 }
 
 
-
-//submit data as post and get success failure message
+//submit data as post and get success or failure message
 async function setData(url, data, data_method){
 	let headers = {
 	   "Content-Type": "application/json",
 	   "Access-Control-Origin": "*",
 		 'X-CSRF-TOKEN': document.head.querySelector("[name~=csrf-token][content]").content
 	}
-
-
+	//wait for a response from the server before proceeding
 	let response = await fetch(url, {
 									    method: data_method,
 									    headers: headers,
 									    body:  JSON.stringify(data)
 									});
 	//proceed once first promise resolved
+	//wait until contents has been jsonified before proceeding
   let reply = await response.json();
 	//proceed once second promise resolved
 	return reply;
 
 }
-
-
 
 
 //show the splats on loading of window
@@ -222,10 +312,21 @@ window.addEventListener('load', () =>{ grab_show_splats(usertype) });
 window.addEventListener('scroll',() =>{ cond_grab(usertype) });
 
 
+//get the data from the database and pass to calling function
+async function getBasicData(url){
+		 //await the response of the fetch call
+		let response = await fetch(url);
+		 //proceed once the first promise is resolved.
+		let data = await response.json()
+	 	//proceed only when the second promise is resolved
+	 	return data;
+ }
+
+
 
 //get the data from the database and pass to calling function
 async function getData(url, splats_get_me_cl){
-	
+
 		//set_is_loading tracks status of loading
 		splats_get_me_cl.set_is_loading(true);
 		 //await the response of the fetch call
@@ -258,8 +359,6 @@ function grab_show_splats(call_type){
 				else{
 					latest_splats.show_non_user_splats(re_returned_data.data);
 				}
-
-
 				//Next, set the next splat url
 				splats_get_me.set_splat_url(re_returned_data.next_page_url);
 				//set the loader to false to allow for future loading
