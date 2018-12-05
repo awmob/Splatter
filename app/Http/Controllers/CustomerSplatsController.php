@@ -10,6 +10,7 @@ use App\User;
 use App\Hashtags;
 use App\HashtagSplats;
 use App\ShoutoutSplats;
+use App\SplatLikes;
 
 use App\Helpers\AuthHelpers;
 use App\Helpers\SplatHelpers;
@@ -150,13 +151,13 @@ class CustomerSplatsController extends Controller
 	*/
 
 	//gets splats for ajax
-	public function get_your_splats(Splats $splats, User $user){
+	public function get_your_splats(Splats $splats, User $user, SplatLikes $splat_likes){
 		$user = $this->check_and_get_user('web');
 
 		$splats_get = $this->get_splats($user->id, $splats);
 
 		//turn shoutouts and hashtags into urls
-		$splats_get = $this->process_splat_inline_urls($splats_get, false, false);
+		$splats_get = $this->process_splat_inline_urls($splats_get, $user->id, false, $splat_likes);
 
 		return $splats_get;
 	}

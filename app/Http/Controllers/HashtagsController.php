@@ -71,7 +71,7 @@ class HashtagsController extends Controller
 			$hashtag_splats_get = $hashtag_splats
 						->join('splats','hashtag_splats.splat_id','=','splats.id')
 						->join('users','hashtag_splats.user_id','=','users.id')
-						->selectRaw('splats.splat as splat, splats.id as splat_id, splats.created_at as splat_created, users.id as userid, users.username as username, users.name as userfullname, users.profile_image as user_image')
+						->selectRaw('splats.splat as splat, splats.id as splat_id, splats.created_at as splat_created, users.id as userid, users.username as username, users.name as userfullname, users.profile_image as user_image, splats.created_at as created_at')
 						->where('hashtag_splats.hashtag_id', '=', $hashtag_id)
 						->orderByRaw('splats.created_at desc')
 						->paginate(config('constants.splat_page_limit'));

@@ -50,13 +50,43 @@ class LatestSplats{
 		this.base_url = base_url;
 	}
 
-	//sets splats for user only
+	//sets splats for main user on home page only
 	show_user_splats(splats){
 			splats.forEach( (big_splat) =>{
 				let target_div = document.getElementById("show_splats");
 				let new_div = document.createElement('div');
-				new_div.className = "text-center splat_text";
-				new_div.innerHTML = big_splat.splat;
+
+				//set the rows
+				let enclosed_div_row_one = document.createElement('div'); // user info row
+				let enclosed_div_row_two = document.createElement('div');
+
+				enclosed_div_row_one.className = "row";
+				enclosed_div_row_one.className = "row";
+
+				let sub_div_one = document.createElement('div');
+				let sub_div_two = document.createElement('div');
+
+				//top user info
+				sub_div_one.className = "col-md-12 text-center small";
+				let time_wrapper = this.set_time(big_splat.created);
+
+				let like_counter = this.like_count_set(big_splat.likes_count, big_splat.splat_id, true);
+
+				time_wrapper.appendChild(like_counter);
+
+				sub_div_one.appendChild(time_wrapper);
+
+
+
+				//actual splat text
+				sub_div_two.className = "col-md-12 text-center splat_text";
+				sub_div_two.innerHTML = big_splat.splat;
+
+				enclosed_div_row_one.appendChild(sub_div_one);
+				enclosed_div_row_two.appendChild(sub_div_two);
+
+				new_div.appendChild(sub_div_one);
+				new_div.appendChild(sub_div_two);
 
 				new_div.innerHTML += "<hr>";
 				target_div.appendChild(new_div);
@@ -65,13 +95,15 @@ class LatestSplats{
 
 	//show splats for non-users
 	show_non_user_splats(splats){
+		//loop through each splat and set the display and contents
 		splats.forEach( (big_splat) =>{
 
 			//main wrapper div for each splat
 			let target_div = document.getElementById("show_splats");
 			let new_div = document.createElement('div');
 
-			let enclosed_div_row_one = document.createElement('div');
+			//set the rows
+			let enclosed_div_row_one = document.createElement('div'); // user info row
 			let enclosed_div_row_two = document.createElement('div');
 
 			enclosed_div_row_one.className = "row";
@@ -100,54 +132,25 @@ class LatestSplats{
 			enclosed_div_row_one.appendChild(sub_div_one);
 			enclosed_div_row_two.appendChild(sub_div_two);
 
+			let time_wrapper = this.set_time(big_splat.created);
+			sub_div_one.appendChild(time_wrapper);
+
 			//follow and like  - only show follow link if follow and like are valid
 			if(big_splat.allow_follow){
-
-
 				//create the like spans
-				let like_span = document.createElement('span');
-
-				if(big_splat.liked){
-					like_span.className = "unliker";
-					like_span.innerHTML = this.set_unlike_image_html();
-					like_span.dataset.splatId = big_splat.splat_id;
-				}
-
-				else{
-					like_span.className = "liker";
-					like_span.innerHTML = this.set_like_image_html();
-					like_span.dataset.splatId = big_splat.splat_id;
-				}
+				let like_span = this.create_like_span(big_splat.liked, big_splat.splat_id);
 
 				//create the follow / unfollow links
 				let follow_div_wrapper = document.createElement('div');
-				let follow_div = document.createElement('div');
-
-				if(big_splat.following){
-					follow_div.className = "small unfollow";
-					follow_div.innerText = "UNFOLLOW";
-				}
-				else{
-					follow_div.className = "small follow";
-					follow_div.innerText = "FOLLOW";
-				}
-
-				follow_div.dataset.followUser = big_splat.userid;
-				follow_div.dataset.mainUser = big_splat.main_user_id;
+				let follow_div = this.create_follow_div(big_splat.userid, big_splat.main_user_id, big_splat.following);
 
 				sub_div_one.appendChild(follow_div_wrapper);
 				follow_div_wrapper.appendChild(follow_div);
 				follow_div_wrapper.appendChild(like_span);
 
-				let like_counter = document.createElement('span');
-				like_counter.dataset.likeCounterSplatId = big_splat.splat_id;
+				//sets the section which displays number of likes a splat has
+				let like_counter = this.like_count_set(big_splat.likes_count, big_splat.splat_id);
 				follow_div_wrapper.appendChild(like_counter);
-
-				//create the like counts
-				if(big_splat.likes_count){
-					like_counter.innerHTML = " (" + big_splat.likes_count + ") ";
-				}
-
 			}
 
 			new_div.appendChild(enclosed_div_row_one);
@@ -157,6 +160,81 @@ class LatestSplats{
 			target_div.appendChild(new_div);
 		});
 	}
+
+
+	//displays the counter displaying number of likes for a splat
+	like_count_set(likes_count, splat_id, main_user = false){
+		let like_counter = document.createElement('span');
+		like_counter.className = "small";
+		like_counter.dataset.likeCounterSplatId = splat_id;
+
+		if(likes_count){
+			let like_text = this.create_like_text(likes_count);
+			like_counter.innerHTML = "<br>( " + likes_count + like_text + " ) ";
+		}
+		return like_counter;
+	}
+
+	create_like_text(likes_count){
+		//if the main user then include the word like/s
+		let like_text = "";
+
+		if(likes_count == 1){
+			like_text = " person likes this"
+		}
+		else if(likes_count > 1){
+			like_text = " people like this"
+		}
+		return like_text;
+	}
+
+
+	set_time(the_time){
+		//time of post
+		let time_wrapper = document.createElement('div');
+		time_wrapper.className = "small time_show";
+		time_wrapper.innerHTML = the_time;
+		return time_wrapper;
+	}
+
+	create_follow_div(user_id, main_user_id, following){
+
+		let follow_divs = document.createElement('div');
+
+		if(following){
+			follow_divs.className = "small unfollow";
+			follow_divs.innerText = "UNFOLLOW";
+		}
+		else{
+			follow_divs.className = "small follow";
+			follow_divs.innerText = "FOLLOW";
+		}
+
+		follow_divs.dataset.followUser = user_id;
+		follow_divs.dataset.mainUser = main_user_id;
+
+		return follow_divs;
+	}
+
+
+	create_like_span(liked, splat_id){
+			//create the like spans
+			let like_spans = document.createElement('span');
+
+			if(liked){
+				like_spans.className = "unliker";
+				like_spans.innerHTML = this.set_unlike_image_html();
+				like_spans.dataset.splatId = splat_id;
+			}
+
+			else{
+				like_spans.className = "liker";
+				like_spans.innerHTML = this.set_like_image_html();
+				like_spans.dataset.splatId = splat_id;
+			}
+			return like_spans;
+	}
+
 
 	set_like_image_html(){
 		let likeme = 'LIKE SPLAT';
@@ -176,7 +254,8 @@ class LatestSplats{
 	add_follow_link(username){
 		let follow_html = '<a href=""></a>';
 	}
-}
+
+}//end class
 
 
 let splats_get_me = new SplatsGetme(the_url);
@@ -213,6 +292,8 @@ document.addEventListener('click', (event) => {
 	}
 });
 
+//like_count_set(likes_count, splat_id, main_user = false)
+//create_like_text(likes_count)
 
 //set the like counts when the like status has changed
 function set_counts(splat_id, url){
@@ -225,7 +306,9 @@ function set_counts(splat_id, url){
 		.then((re_returned_data) => {
 			//set the counts
 			if(re_returned_data.success){
-				like_count_set.innerHTML = " (" + re_returned_data.success + ") ";
+				//get the text for like
+				let the_text = latest_splats.create_like_text(re_returned_data.success);
+				like_count_set.innerHTML = "<br>( " + re_returned_data.success + the_text + " ) ";
 			}
 			else{
 				like_count_set.innerHTML = "";

@@ -7,6 +7,9 @@
 		//combined umbrella function to find and set html elements in splats
 		private function process_splat_inline_urls($splats_get, $main_user_id, $following_model = false, $splat_like_model = false){
 			for($i = 0; $i < sizeof($splats_get); $i++){
+				//id hack for different return info from main user to non main user
+				$splats_get[$i]->splat_id = $splats_get[$i]->splat_id ? $splats_get[$i]->splat_id : $splats_get[$i]->id;
+
 				//inline elements
 				$splats_get[$i]->splat = $this->process_single_splat_shoutouts($splats_get[$i]->splat);
 				$splats_get[$i]->splat = $this->process_single_splat_hashtag_urls($splats_get[$i]->splat);
@@ -14,6 +17,8 @@
 				//set user elements that appear above inline elements
 				$html_link = $this->set_shoutout_url($splats_get[$i]->username, false);
 				$splats_get[$i]->user_url = $html_link;
+
+				$splats_get[$i]->created = $this->fix_date_time($splats_get[$i]->created_at);
 
 				//set follow forms / links
 				if($main_user_id){
@@ -45,6 +50,14 @@
 			return $splats_get;
 		}
 
+		//presents time in nicer format
+		private function fix_date_time($date_time){
+			$date_fix = strtotime($date_time);
+			$date_fix = date('d M, Y', $date_fix);
+
+
+			return $date_fix;
+		}
 
 
 		//Finds hashtags in string which have at least one succeeding alpha-numeric character

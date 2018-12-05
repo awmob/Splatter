@@ -169,3 +169,11 @@ a.logout{
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+hr{
+	border-color: #ba103b;
+}
+
+.time_show{
+	color: white;
+}
