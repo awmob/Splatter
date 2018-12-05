@@ -24,7 +24,7 @@ class UserController extends Controller
 			$this->guard_type = 'web';
 		}
 
-    public function show_user_profile(Request $request, User $user_model, Splats $splats){
+    public function show_user_profile(Request $request, User $user_model, Splats $splats, Following $following){
 
 			//check logged in user details
 			$user = $this->check_and_get_user('web');
@@ -47,6 +47,9 @@ class UserController extends Controller
 				//check that splats exist for that profile
 				$splats_get = $splats->check_splats_exist($user_get->id);
 
+				//get number of followers and following and show
+				$user_get->following = $following->get_users_you_are_following_count($user_get->id);
+				$user_get->followers = $following->get_your_followers_count($user_get->id);
 
 				return view('public_profile', compact('guard_type','user','user_get','splats_get'));
 			}

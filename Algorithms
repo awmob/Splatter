@@ -12,18 +12,19 @@ Goals
 
 User goals
 ------------------
-1. Show # followers
-2. Show # of Splats
-3. Show a brief text profile
+1. Show # followers *
+2. Show # of Splats  *
+3. Show a brief text profile *
+4. Followers Page
+5. Following Page
 
 --------------------
-1. Show who you are following
-2. Allow update etc of text profile
+1. Allow update etc of text profile
 
 
 Splats
 ------------------
-1. Show splat time posted * 
+1. Show splat time posted *
 2. Splat Comments
 3. Show popup of user info @username when hover over
 

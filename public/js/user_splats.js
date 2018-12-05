@@ -122,9 +122,20 @@ class LatestSplats{
 			sub_div_two.className = "col-md-12 text-center splat_text";
 
 			//top user info
-			sub_div_one.innerHTML = user_img + " ";
-			sub_div_one.innerHTML += big_splat.userfullname + " ";
-			sub_div_one.innerHTML += big_splat.user_url;
+
+			let user_span_one = document.createElement('span');
+			user_span_one.className = "user-splat";
+
+			//set data
+			user_span_one.dataset.username = big_splat.username;
+
+			user_span_one.innerHTML += user_img + " ";
+			user_span_one.innerHTML += big_splat.userfullname + " ";
+			user_span_one.innerHTML += big_splat.user_url;
+
+			sub_div_one.appendChild(user_span_one);
+
+
 
 			//actual splat text
 			sub_div_two.innerHTML = big_splat.splat;
@@ -247,7 +258,7 @@ class LatestSplats{
 	}
 
 	set_image_html(username, src_file){
-		let image_html = '<img class="rounded-circle profile-pic-small" src="' + this.base_url  + '/storage/profile_pics/' + src_file + '" alt="'+ username +'">';
+		let image_html = '<img class="rounded-circle profile-pic-small user-splat" data-username="'+username+'" src="' + this.base_url  + '/storage/profile_pics/' + src_file + '" alt="'+ username +'">';
 		return image_html;
 	}
 
@@ -258,6 +269,36 @@ class LatestSplats{
 }//end class
 
 
+
+
+class UserTrack{
+
+	constructor(){
+		this.timer_set = false;
+	}
+
+	get_timer_set(){
+		return this.timer_set;
+	}
+
+	set_timer_set(setme){
+		this.timer_set = setme;
+	}
+//354
+	//creates an info box when user hovers over user info
+	create_popup(){
+		this.user_popup = document.createElement('div');
+		this.user_popup.className = "user-popup-visible";
+		document.body.appendChild(this.user_popup);
+	}
+
+	remove_popup(){
+		alert("REMOVE");
+		document.body.removeChild(this.user_popup);
+	}
+}
+
+let user_track = new UserTrack();
 let splats_get_me = new SplatsGetme(the_url);
 let latest_splats = new LatestSplats(base_url);
 
@@ -291,6 +332,35 @@ document.addEventListener('click', (event) => {
 			//splatId
 	}
 });
+
+//set even listener for hover
+document.addEventListener('mouseover', (event) => {
+//user_track.timer_set
+	document.getElementById('tempo').innerText = user_track.get_timer_set();
+	//hover over user to get user info popup only if another session is not in progress
+	if(!user_track.timer_set){
+		if(event.target.matches('.user-splat')){
+			 user_track.timer_set = setTimeout(() => {
+				 //alert(event.target.dataset.username);
+				 user_track.create_popup();
+				 user_track.timer_set = false;
+			 }, 1000);
+		}
+	}
+	else{
+		user_track.remove_popup();
+		//clear timeout if hover out
+		if(!event.target.matches('.user-splat')){
+			clearTimeout(user_track.timer_set);
+			user_track.timer_set = false;
+		}
+	}
+
+
+
+});
+
+
 
 //like_count_set(likes_count, splat_id, main_user = false)
 //create_like_text(likes_count)

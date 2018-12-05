@@ -177,3 +177,17 @@ hr{
 .time_show{
 	color: white;
 }
+
+.user-splat:hover{
+	cursor:pointer;
+}
+
+.user-popup-visible{
+	z-index: 99;
+	width: 200px;
+	height: 200px;
+	background-color: white;
+	position: fixed;
+	top: 20px;
+	right: 20px;
+}

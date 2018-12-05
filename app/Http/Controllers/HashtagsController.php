@@ -28,11 +28,17 @@ class HashtagsController extends Controller
 			$this->guard_type = 'web';
 		}
 
-    public function show_hash_tag(Request $request){
+    public function show_hash_tag(Request $request, Following $following){
 			//check if the hashtag is in the dbase
 			$hashtag = $request->hashtag;
 
 			$user = $this->check_and_get_user('web');
+
+			//get number of followers and following and show
+			$user->following = $following->get_users_you_are_following_count($user->id);
+			$user->followers = $following->get_your_followers_count($user->id);
+
+
 			$guard_type = $this->guard_type;
 			return view('hashtags',compact('user','guard_type','hashtag'));
 		}

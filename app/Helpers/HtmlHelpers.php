@@ -35,7 +35,7 @@
 				$shoutout = "@" . $shoutout;
 			}
 			$url = url('profile/'.$shoutout_clean);
-			$html = '<a href="'.$url.'">'.$shoutout.'</a>';
+			$html = '<a data-username="'.$shoutout_clean.'" class="user-splat" href="'.$url.'">'.$shoutout.'</a>';
 			return $html;
 		}
 

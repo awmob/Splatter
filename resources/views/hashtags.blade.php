@@ -21,7 +21,15 @@
        @if ($user)
        <p>Hello, {{$user->name}}! Start Splatting!</p>
        <p class="small">&#64;{{$user->username}}</p>
+
+       <div class="small mb-3">
+         <span>Following: <foll id="following_num">{{$user->following}}</foll></span>
+         <span class="ml-4">Followers: <foll id="follower_num">{{$user->followers}}</foll></span>
+       </div>
+
+
        <p><img class="rounded-circle profile-pic-main" src="{{asset('storage/profile_pics/' . $user->profile_image)}}" alt="{{$user->username}}"></p>
+       <p class="small profile_text">{{$user->profile_text}}</p>
        @else
        <p>Hello, friend!</p>
        @endif
@@ -57,13 +65,14 @@
     </form>
     @endif
 
-  </div>
+
 
 
 
   <div class="row">
     <div class="col-sm-12 p-5 text-center splat_text daheadfont">
       <h3>Latest #{{$hashtag}} Splats</h3>
+      <div id="tempo"></div>
       <hr>
       <div id="show_splats"></div>
     </div>

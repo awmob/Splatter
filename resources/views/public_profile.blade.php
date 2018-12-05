@@ -18,13 +18,20 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-12 p-5 text-center splat_text daheadfont">
+    <div class="col-sm-12 pt-5 text-center splat_text daheadfont">
 
        <p>{{$user_get->name}}</p>
 
        <p class="small">&#64;{{$user_get->username}}</p>
 
+       <div class="small mb-3">
+         <span>Following: <foll id="following_num">{{$user_get->following}}</foll></span>
+         <span class="ml-4">Followers: <foll id="follower_num">{{$user_get->followers}}</foll></span>
+       </div>
+
        <p><img class="rounded-circle profile-pic-main" src="{{asset('storage/profile_pics/' . $user_get->profile_image)}}" alt="{{$user_get->username}}"></p>
+
+       <p class="small profile_text">{{$user_get->profile_text}}</p>
     </div>
 
   </div>

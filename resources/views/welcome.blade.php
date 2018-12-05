@@ -26,9 +26,15 @@
        <p>Hello, {{$user->name}}! Start Splatting!</p>
        <p class="small">&#64;{{$user->username}}</p>
 
+       <div class="small mb-3">
+         <span>Following: <foll id="following_num">{{$user->following}}</foll></span>
+         <span class="ml-4">Followers: <foll id="follower_num">{{$user->followers}}</foll></span>
+       </div>
 
 
        <p><img class="rounded-circle profile-pic-main" src="{{asset('storage/profile_pics/' . $user->profile_image)}}" alt="{{$user->username}}"></p>
+
+       <p class="small profile_text">{{$user->profile_text}}</p>
     </div>
 
   </div>
@@ -60,7 +66,7 @@
     </div>
     </form>
 
-  </div>
+  
 
 
   @if ($splats_get)
@@ -83,7 +89,10 @@
        <p>Howdy there, pardner. Welcome to Splatter.</p>
         <p>Like Twitter? Sure it is. Like Twitter? Sure you do! Now get Splattering!</p>
         <p>Currently, Splatter is a test site designed to demonstrate Laravel Oauth API functionality.</p>
+        <p><a href="https://github.com/awmob/Splatter" target="_blank">GITHUB PAGE</a></p>
+        <p><b>Tester Credentials:<br>User: d@d.com<br>Pass: 12345678</b></p>
         <p><b>Tester Credentials:<br>User: a@b.com<br>Pass: 12345678</b></p>
+        <p><b>Tester Credentials:<br>User: tester@tester.com<br>Pass: 12345678</b></p>
      </div>
    </div>
 
