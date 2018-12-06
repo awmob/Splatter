@@ -75,4 +75,17 @@ class UserController extends Controller
 
 			return $user_splats_get;
 		}
+
+		//get single user details to pass to api
+		public function single_user_get_api(User $user, $username){
+			$user_get = $user->public_single_user_get($this->remove_ampher($username));
+
+			if($user_get){
+				$user_get->success = true;
+				return $user_get;
+			}
+			else{
+				return json_encode(['success' => false]);
+			}		
+		}
 }

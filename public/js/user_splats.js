@@ -293,19 +293,27 @@ class UserTrack{
 	}
 
 	//creates an info box when user hovers over user info
-	create_popup(){
+	create_popup(user_info, base_url){
 		let offset_x = -100;
 		let offset_y = this.set_y_offset();
 		this.user_popup.style.left =  this.mousex + offset_x +  "px";
 		this.user_popup.style.top = this.mousey + offset_y + "px";
-		this.user_popup.className = "user-popup-visible rounded";
+		this.user_popup.className = "user-popup-visible rounded p-3 small";
+
+
+		this.user_popup.innerHTML = "<div class='text-center'><img class='rounded-circle profile-pic-med' src='" + base_url  + "/storage/profile_pics/" +  user_info.profile_image + "' alt='"+ user_info.username +"'></div>";
+
+		this.user_popup.innerHTML += "<div class='mt-2 text-center'><b>" + user_info.name + "</b> <i>&#64;" + user_info.username +"</i></div>";
+
+		this.user_popup.innerHTML += "<div class='mt-2'>" + user_info.profile_text + "</div>";
+
 	}
 
-	//changes offset for positioning of the user window 
+	//changes offset for positioning of the user window
 	set_y_offset(){
-		let offset_y = -210;
-		if(this.mousey < 200){
-			offset_y = 15;
+		let offset_y = -250;
+		if(this.mousey < 240){
+			offset_y = 35;
 		}
 		return offset_y;
 	}
@@ -369,8 +377,20 @@ document.addEventListener('mouseover', (event) => {
 		if(event.target.matches('.user-splat')){
 			 user_track.timer_set = true;
 			 user_track.timer_set = setTimeout(() => {
-				 //alert(event.target.dataset.username);
-				 user_track.create_popup();
+
+				 let the_username = event.target.dataset.username;
+				 url_send = base_url  + '/user-get-api/' + the_username;
+
+				 getBasicData(url_send)
+			 		//get the user info - async wait for success response before proceeding
+			 		.then((re_returned_data) => {
+			 			//set the counts
+			 			if(re_returned_data.success){
+			 				//get the text for like
+				 			user_track.create_popup(re_returned_data, base_url);
+			 			}
+			 		});
+
 				 user_track.timer_set = false;
 			 }, 300);
 		}

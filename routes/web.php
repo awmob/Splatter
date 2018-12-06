@@ -34,6 +34,9 @@ Route::get('/hashtag-splats/{hashtag}', 'HashtagsController@get_hashtag_splats')
 //show user
 Route::get('/profile/{username}','UserController@show_user_profile')->name('user_profile');
 
+Route::get('/user-get-api/{username}','UserController@single_user_get_api')->name('user_getter');
+
+
 //get single user details json
 Route::get('user-info-get/{user_id}','UserController@get_single_user')->name('user_info');
 
