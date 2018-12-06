@@ -275,7 +275,14 @@ class UserTrack{
 
 	constructor(){
 		this.timer_set = false;
+		this.user_popup = document.createElement('div');
+		this.user_popup.className = "hider";
+		document.body.appendChild(this.user_popup);
+		this.mousex = 0;
+		this.mousey = 0;
 	}
+
+
 
 	get_timer_set(){
 		return this.timer_set;
@@ -284,17 +291,27 @@ class UserTrack{
 	set_timer_set(setme){
 		this.timer_set = setme;
 	}
-//354
+
 	//creates an info box when user hovers over user info
 	create_popup(){
-		this.user_popup = document.createElement('div');
-		this.user_popup.className = "user-popup-visible";
-		document.body.appendChild(this.user_popup);
+		let offset_x = -100;
+		let offset_y = this.set_y_offset();
+		this.user_popup.style.left =  this.mousex + offset_x +  "px";
+		this.user_popup.style.top = this.mousey + offset_y + "px";
+		this.user_popup.className = "user-popup-visible rounded";
+	}
+
+	//changes offset for positioning of the user window 
+	set_y_offset(){
+		let offset_y = -210;
+		if(this.mousey < 200){
+			offset_y = 15;
+		}
+		return offset_y;
 	}
 
 	remove_popup(){
-		alert("REMOVE");
-		document.body.removeChild(this.user_popup);
+		this.user_popup.className = "hider";
 	}
 }
 
@@ -333,25 +350,41 @@ document.addEventListener('click', (event) => {
 	}
 });
 
+
+//set mouse locations with each mouse move
+document.onmousemove = (event) =>{
+	document.getElementById('tempo').innerText = event.clientY;
+	user_track.mousex = event.clientX;
+	user_track.mousey = event.clientY;
+};
+
 //set even listener for hover
 document.addEventListener('mouseover', (event) => {
 //user_track.timer_set
-	document.getElementById('tempo').innerText = user_track.get_timer_set();
+	//document.getElementById('tempo').innerText = user_track.get_timer_set();
 	//hover over user to get user info popup only if another session is not in progress
 	if(!user_track.timer_set){
+		document.getElementById('tempo').innerText = 1;
+		//hovering over user info
 		if(event.target.matches('.user-splat')){
+			 user_track.timer_set = true;
 			 user_track.timer_set = setTimeout(() => {
 				 //alert(event.target.dataset.username);
 				 user_track.create_popup();
 				 user_track.timer_set = false;
-			 }, 1000);
+			 }, 300);
+		}
+		else{
+			clearTimeout(user_track.timer_set);
+			user_track.remove_popup();
+			user_track.timer_set = false;
 		}
 	}
+
 	else{
-		user_track.remove_popup();
-		//clear timeout if hover out
 		if(!event.target.matches('.user-splat')){
 			clearTimeout(user_track.timer_set);
+			user_track.remove_popup();
 			user_track.timer_set = false;
 		}
 	}

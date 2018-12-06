@@ -188,6 +188,8 @@ hr{
 	height: 200px;
 	background-color: white;
 	position: fixed;
-	top: 20px;
-	right: 20px;
+}
+
+.hider{
+	display: none;
 }
