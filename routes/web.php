@@ -57,7 +57,16 @@ Route::post('/submit-splat', 'CustomerSplatsController@submit_splat')->name('cus
 Route::get('/customer-splats', 'CustomerSplatsController@get_your_splats')->name('customer.get_splats')->middleware('auth');
 
 
+//show followers and following
+Route::get('/followers', 'FollowingController@show_followers')->name('show.followers')->middleware('auth');
+Route::get('/following', 'FollowingController@show_following')->name('show.following')->middleware('auth');
 
+//show followers and following
+Route::get('/followers/{username}', 'FollowingController@show_followers_uid')->name('show.followers.uid')->middleware('auth');
+Route::get('/following/{username}', 'FollowingController@show_following_uid')->name('show.following.uid')->middleware('auth');
+
+Route::get('/ajax_following/{user_id}','FollowingController@get_following_ajax')->middleware('auth');
+Route::get('/ajax_followers/{user_id}','FollowingController@get_followers_ajax')->middleware('auth');
 
 Route::prefix('admin')->group(function() {
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login')->middleware('guest:admin');

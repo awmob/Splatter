@@ -34,6 +34,7 @@ class User extends Authenticatable
 
 
     public function public_single_user_get($username){
+     
       $user_get = $this->select('id','username','name','profile_image','profile_text');
 			$user_get = $user_get->where('username','=',$username)->first();
       return $user_get;

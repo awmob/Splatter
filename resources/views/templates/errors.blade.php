@@ -1,15 +1,17 @@
-@if (count($errors))
-<div class = "errors_pass text-center">
+@if (isset($errors))
+  @if (count($errors))
+  <div class = "errors_pass text-center">
 
-  <ul>
+    <ul>
 
-    @foreach ($errors->all() as $error)
+      @foreach ($errors->all() as $error)
 
-    <li class="unstyled">{{ $error }}</li>
+      <li class="unstyled">{{ $error }}</li>
 
-    @endforeach
+      @endforeach
 
-  </ul>
+    </ul>
 
-</div>
+  </div>
+  @endif
 @endif

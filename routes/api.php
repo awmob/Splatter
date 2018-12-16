@@ -13,21 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-
+//http://127.0.0.1:8000/api/auth/user
 
 Route::group([
     'prefix' => 'auth'
 ], function () {
     Route::post('login', 'AuthController@login');
-
-    
     Route::get('login', function () {
-        return view('welcome');
+        $user = false;
+
+
+
+        return view('welcome',compact('user'));
     });
-
-
     Route::post('signup', 'AuthController@signup');
-
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
@@ -35,6 +34,9 @@ Route::group([
         Route::get('user', 'AuthController@user');
     });
 });
+
+
+
 /*
 
 Client ID: 1

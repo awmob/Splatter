@@ -18,10 +18,10 @@ class Following extends Model
 			$this->save();
 		}
 
+
 		public function get_following($main_user_id, $followee_user_id){
 			$following_get = $this->where('user_id',$main_user_id)
 												->where('following_user_id',$followee_user_id)->first();
-
 			return $following_get;
 
 		}
@@ -29,6 +29,8 @@ class Following extends Model
 		public function remove_following($id){
 			$this->find($id)->delete();
 		}
+
+
 
 
 		public function get_users_you_are_following_count($main_user_id){

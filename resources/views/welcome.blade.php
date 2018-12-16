@@ -26,9 +26,14 @@
        <p>Hello, {{$user->name}}! Start Splatting!</p>
        <p class="small">&#64;{{$user->username}}</p>
 
-       <div class="small mb-3">
-         <span>Following: <foll id="following_num">{{$user->following}}</foll></span>
-         <span class="ml-4">Followers: <foll id="follower_num">{{$user->followers}}</foll></span>
+        <div class="small mb-3">
+
+         @php
+          $following_link = url('following');
+          $followers_link = url('followers');
+         @endphp
+         <span><a href="{{$following_link}}">Following: <foll id="following_num">{{$user->following}}</foll></a></span>
+         <span class="ml-4"><a href="{{$followers_link}}">Followers: <foll id="follower_num">{{$user->followers}}</foll></a></span>
        </div>
 
 
@@ -66,7 +71,7 @@
     </div>
     </form>
 
-  
+
 
 
   @if ($splats_get)
@@ -88,7 +93,7 @@
      <div class="col-sm-12 p-5 text-center ">
        <p>Howdy there, pardner. Welcome to Splatter.</p>
         <p>Like Twitter? Sure it is. Like Twitter? Sure you do! Now get Splattering!</p>
-        <p>Currently, Splatter is a test site designed to demonstrate Laravel Oauth API functionality.</p>
+        <p>Currently, Splatter is a test site designed to demonstrate Laravel Oauth API functionality and Ethereum Smart Contract Blockchain data storage.</p>
         <p><a href="https://github.com/awmob/Splatter" target="_blank">GITHUB PAGE</a></p>
         <p><b>Tester Credentials:<br>User: d@d.com<br>Pass: 12345678</b></p>
         <p><b>Tester Credentials:<br>User: a@b.com<br>Pass: 12345678</b></p>
@@ -98,7 +103,6 @@
 
    <form method = "POST" action = "{{route('customer.login')}}">
    <div class="row">
-
            {{csrf_field()}}
          <div class="col-sm-1 text-center m-1">
          </div>
@@ -117,9 +121,6 @@
 
           <div class="col-sm-1 text-center m-1">
           </div>
-
-
-
    </div>
 
 
@@ -132,6 +133,7 @@
 
 @if($user)
   <script>let the_url="{{url('customer-splats')}}";let usertype="user";let base_url="{{url('')}}"</script>
+  <script src="{{asset('js/shared.js')}}"></script>
 	<script src="{{asset('js/user_splats.js')}}"></script>
 @endif
 @endsection

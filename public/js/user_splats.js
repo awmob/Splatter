@@ -15,32 +15,6 @@ if the next page url is null, then stop
 Keeps track of loading urls
 Also keep track of loading status
 */
-class SplatsGetme{
-
-	constructor(init_url){
-		this.splat_url = init_url;
-		this.is_loading = false;
-	}
-
-	//kee[ track of the loading url for data retrieval
-	set_splat_url(url){
-		this.splat_url = url;
-	}
-
-	get_splat_url(){
-		return this.splat_url;
-	}
-
-	//variable to keep track of whether a splat load is pending
-	set_is_loading(setting){
-		this.is_loading = setting;
-	}
-
-	get_is_loading(){
-		return this.is_loading;
-	}
-
-}
 
 class LatestSplats{
 	/*
@@ -73,7 +47,6 @@ class LatestSplats{
 				let like_counter = this.like_count_set(big_splat.likes_count, big_splat.splat_id, true);
 
 				time_wrapper.appendChild(like_counter);
-
 				sub_div_one.appendChild(time_wrapper);
 
 
@@ -121,18 +94,7 @@ class LatestSplats{
 			//actual splat text
 			sub_div_two.className = "col-md-12 text-center splat_text";
 
-			//top user info
-
-			let user_span_one = document.createElement('span');
-			user_span_one.className = "user-splat";
-
-			//set data
-			user_span_one.dataset.username = big_splat.username;
-
-			user_span_one.innerHTML += user_img + " ";
-			user_span_one.innerHTML += big_splat.userfullname + " ";
-			user_span_one.innerHTML += big_splat.user_url;
-
+			let user_span_one = this.set_user_span(big_splat.username, big_splat.userfullname , big_splat.user_url, user_img);
 			sub_div_one.appendChild(user_span_one);
 
 
@@ -146,7 +108,7 @@ class LatestSplats{
 			let time_wrapper = this.set_time(big_splat.created);
 			sub_div_one.appendChild(time_wrapper);
 
-			//follow and like  - only show follow link if follow and like are valid
+			//follow and like  - only show follow link if follow and like are valid ie if not self
 			if(big_splat.allow_follow){
 				//create the like spans
 				let like_span = this.create_like_span(big_splat.liked, big_splat.splat_id);
@@ -170,6 +132,21 @@ class LatestSplats{
 			new_div.innerHTML += "<hr>";
 			target_div.appendChild(new_div);
 		});
+	}
+
+	set_user_span(username, userfullname, user_url, user_img){
+		//top user info
+		let user_span_one = document.createElement('span');
+		user_span_one.className = "user-splat";
+
+		//set data
+		user_span_one.dataset.username = username;
+
+		user_span_one.innerHTML += user_img + " ";
+		user_span_one.innerHTML += userfullname + " ";
+		user_span_one.innerHTML += user_url;
+
+		return user_span_one;
 	}
 
 
@@ -270,63 +247,10 @@ class LatestSplats{
 
 
 
+//initialize Class instances
 
-class UserTrack{
-
-	constructor(){
-		this.timer_set = false;
-		this.user_popup = document.createElement('div');
-		this.user_popup.className = "hider";
-		document.body.appendChild(this.user_popup);
-		this.mousex = 0;
-		this.mousey = 0;
-	}
-
-
-
-	get_timer_set(){
-		return this.timer_set;
-	}
-
-	set_timer_set(setme){
-		this.timer_set = setme;
-	}
-
-	//creates an info box when user hovers over user info
-	create_popup(user_info, base_url){
-		let offset_x = -100;
-		let offset_y = this.set_y_offset();
-		this.user_popup.style.left =  this.mousex + offset_x +  "px";
-		this.user_popup.style.top = this.mousey + offset_y + "px";
-		this.user_popup.className = "user-popup-visible rounded p-3 small";
-
-
-		this.user_popup.innerHTML = "<div class='text-center'><img class='rounded-circle profile-pic-med' src='" + base_url  + "/storage/profile_pics/" +  user_info.profile_image + "' alt='"+ user_info.username +"'></div>";
-
-		this.user_popup.innerHTML += "<div class='mt-2 text-center'><b>" + user_info.name + "</b> <i>&#64;" + user_info.username +"</i></div>";
-
-		this.user_popup.innerHTML += "<div class='mt-2'>" + user_info.profile_text + "</div>";
-
-	}
-
-	//changes offset for positioning of the user window
-	set_y_offset(){
-		let offset_y = -250;
-		if(this.mousey < 240){
-			offset_y = 35;
-		}
-		return offset_y;
-	}
-
-	remove_popup(){
-		this.user_popup.className = "hider";
-	}
-}
-
-let user_track = new UserTrack();
 let splats_get_me = new SplatsGetme(the_url);
 let latest_splats = new LatestSplats(base_url);
-
 
 
 //set event listener for delegation application of event listener to dynamic objects
@@ -359,59 +283,6 @@ document.addEventListener('click', (event) => {
 });
 
 
-//set mouse locations with each mouse move
-document.onmousemove = (event) =>{
-	document.getElementById('tempo').innerText = event.clientY;
-	user_track.mousex = event.clientX;
-	user_track.mousey = event.clientY;
-};
-
-//set even listener for hover
-document.addEventListener('mouseover', (event) => {
-//user_track.timer_set
-	//document.getElementById('tempo').innerText = user_track.get_timer_set();
-	//hover over user to get user info popup only if another session is not in progress
-	if(!user_track.timer_set){
-		document.getElementById('tempo').innerText = 1;
-		//hovering over user info
-		if(event.target.matches('.user-splat')){
-			 user_track.timer_set = true;
-			 user_track.timer_set = setTimeout(() => {
-
-				 let the_username = event.target.dataset.username;
-				 url_send = base_url  + '/user-get-api/' + the_username;
-
-				 getBasicData(url_send)
-			 		//get the user info - async wait for success response before proceeding
-			 		.then((re_returned_data) => {
-			 			//set the counts
-			 			if(re_returned_data.success){
-			 				//get the text for like
-				 			user_track.create_popup(re_returned_data, base_url);
-			 			}
-			 		});
-
-				 user_track.timer_set = false;
-			 }, 300);
-		}
-		else{
-			clearTimeout(user_track.timer_set);
-			user_track.remove_popup();
-			user_track.timer_set = false;
-		}
-	}
-
-	else{
-		if(!event.target.matches('.user-splat')){
-			clearTimeout(user_track.timer_set);
-			user_track.remove_popup();
-			user_track.timer_set = false;
-		}
-	}
-
-
-
-});
 
 
 
@@ -517,16 +388,6 @@ window.addEventListener('load', () =>{ grab_show_splats(usertype) });
 //show more splats when the user scrolls
 window.addEventListener('scroll',() =>{ cond_grab(usertype) });
 
-
-//get the data from the database and pass to calling function
-async function getBasicData(url){
-		 //await the response of the fetch call
-		let response = await fetch(url);
-		 //proceed once the first promise is resolved.
-		let data = await response.json()
-	 	//proceed only when the second promise is resolved
-	 	return data;
- }
 
 
 
