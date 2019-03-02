@@ -57,7 +57,7 @@
           </div>
 
           <div class="col-sm-6 text-center m-1">
-            <input type="text" name="splat" class="form_text" maxlength="{{config('constants.splat_limit')}}">
+            <input type="text" id="splat" name="splat" class="form_text" maxlength="{{config('constants.splat_limit')}}">
           </div>
 
 
@@ -95,5 +95,15 @@
   <script>let the_url="{{$url}}";let usertype="public";let base_url="{{url('')}}"</script>
   <script src="{{asset('js/shared.js')}}"></script>
 	<script src="{{asset('js/user_splats.js')}}"></script>
+
+  <script src="{{asset('js/text_swappers.js')}}"></script>
+  <script>
+    let text_id_obj = {
+     "splat" : "Splat..."
+    };
+
+    add_change_listeners(text_id_obj);
+    initialize_text(text_id_obj);
+  </script>
 
 @endsection

@@ -55,7 +55,7 @@
           </div>
 
           <div class="col-sm-6 text-center m-1">
-            <input type="text" name="splat" class="form_text" maxlength="{{config('constants.splat_limit')}}">
+            <input id="splat" type="text" name="splat" class="form_text" maxlength="{{config('constants.splat_limit')}}">
           </div>
            <div class="col-sm-2 text-center m-1">
            </div>
@@ -82,5 +82,15 @@
   <script>let followtype="{{$follow_type}}";let url="{{$follow_url}}";let base_url="{{url('')}}"</script>
   <script src="{{asset('js/shared.js')}}"></script>
 	<script src="{{asset('js/folls.js')}}"></script>
+
+  <script src="{{asset('js/text_swappers.js')}}"></script>
+  <script>
+    let text_id_obj = {
+     "splat" : "Splat..."
+    };
+
+    add_change_listeners(text_id_obj);
+    initialize_text(text_id_obj);
+  </script>
 
 @endsection

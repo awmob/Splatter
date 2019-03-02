@@ -46,7 +46,7 @@
 
 
 
-    <form method = "POST" action = "{{route('customer.submit.splat')}}">
+    <form method = "POST" autocomplete="off" action = "{{route('customer.submit.splat')}}">
       {{csrf_field()}}
     <div class="row">
 
@@ -59,7 +59,7 @@
           </div>
 
           <div class="col-sm-6 text-center m-1">
-            <input type="text" name="splat" class="form_text" maxlength="{{config('constants.splat_limit')}}">
+            <input id="splat" type="text" name="splat" class="form_text" maxlength="{{config('constants.splat_limit')}}">
           </div>
 
 
@@ -101,7 +101,7 @@
      </div>
    </div>
 
-   <form method = "POST" action = "{{route('customer.login')}}">
+   <form method = "POST" action = "{{route('customer.login')}}" autocomplete="off" >
    <div class="row">
            {{csrf_field()}}
          <div class="col-sm-1 text-center m-1">
@@ -112,11 +112,11 @@
          </div>
 
          <div class="col-sm-4 text-center m-1">
-           <input type="text" name="email" class="form_text">
+           <input id="email" type="text" name="email" class="form_text">
          </div>
 
          <div class="col-sm-4 text-center m-1">
-           <input type="password" name="password" class="form_text">
+           <input id="password" type="password" name="password" class="form_text">
           <div>
 
           <div class="col-sm-1 text-center m-1">
@@ -131,9 +131,42 @@
 
 </div>
 
+
+  <script src="{{asset('js/text_swappers.js')}}"></script>
+
 @if($user)
   <script>let the_url="{{url('customer-splats')}}";let usertype="user";let base_url="{{url('')}}"</script>
   <script src="{{asset('js/shared.js')}}"></script>
 	<script src="{{asset('js/user_splats.js')}}"></script>
+  <script>
+    let text_id_obj = {
+     "splat" : "Splat..."
+    };
+
+    add_change_listeners(text_id_obj);
+    initialize_text(text_id_obj);
+  </script>
+@else
+  <script>
+    //set text field swapping parameters
+    let password_text_id_obj = {
+     "password" : "Password..."
+    };
+
+    let text_id_obj = {
+     "email" : "Email Address..."
+    };
+
+    add_change_listeners(text_id_obj);
+    set_password_text_listeners(password_text_id_obj);
+    initialize_text(text_id_obj);
+  </script>
+
+
 @endif
+
+
+
+
+
 @endsection
