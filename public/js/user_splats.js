@@ -406,17 +406,14 @@ async function getData(url, splats_get_me_cl){
 
 
 
-let scrollerdiv = document.getElementById("scrollers");
-document.addEventListener("scroll", ()=>{
-	scrollerdiv.innerText = window.innerHeight + "  -  " + window.scrollY + "  -  " + document.body.offsetHeight;
-});
-
 
 
 //conditional slat grab for scrolling.
 //only get splats if the scroll is at or near middle of page and if there is not
 //a current splat load pending
 function cond_grab(call_type){
+	//set scroll limit - if the current scroll y position plus the inner height of window + 10% is greater than total height of
+	//document, then load more splats!
 	if (!splats_get_me.get_is_loading() && window.innerHeight + window.scrollY + (window.innerHeight * 0.1) >= document.body.offsetHeight) {
 		grab_show_splats(call_type);
 	}

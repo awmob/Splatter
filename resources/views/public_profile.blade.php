@@ -8,9 +8,6 @@
 
 @section('main')
 
-
-<div id="scrollers" style="position:fixed; top:10px;">test</div>
-
   <div class="row">
     <div class="col-sm-12 p-2 text-center splatter_backer">
       <h2 class="daheadfont">Like Twitter, but Splatter!</h2>
