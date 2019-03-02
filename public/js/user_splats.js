@@ -405,8 +405,16 @@ async function getData(url, splats_get_me_cl){
  }
 
 
+
+let scrollerdiv = document.getElementById("scrollers");
+document.addEventListener("scroll", ()=>{
+	scrollerdiv.innerText = window.innerHeight + "  -  " + window.scrollY + "  -  " + document.body.offsetHeight;
+});
+
+
+
 //conditional slat grab for scrolling.
-//only get splats if the scroll is at or near bottom of page and if there is not
+//only get splats if the scroll is at or near middle of page and if there is not
 //a current splat load pending
 function cond_grab(call_type){
 	if (!splats_get_me.get_is_loading() && window.innerHeight + window.scrollY >= document.body.offsetHeight) {
